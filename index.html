@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html> 
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="generator" content="RocketCake">
+	<title>一只猫的网站 - 治愈时光</title>
+	<style>
+		/* 全局重置与基础样式 */
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: "Microsoft YaHei", Arial, sans-serif; /* 适配中文的优雅字体 */
+		}
+
+		/* 页面整体布局：全屏居中 + 柔和背景 */
+		body {
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); /* 渐变背景提升高级感 */
+			/* 兼容旧版浏览器 */
+			display: -webkit-box;
+			display: -ms-flexbox;
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			    -ms-flex-direction: column;
+			        flex-direction: column;
+			-webkit-box-pack: center;
+			    -ms-flex-pack: center;
+			        justify-content: center;
+			-webkit-box-align: center;
+			    -ms-flex-align: center;
+			        align-items: center;
+		}
+
+		/* 主容器：卡片式设计 + 阴影 */
+		#container_5271cb71 {
+			text-align: center;
+			width: 100%;
+			max-width: 600px;
+			padding: 40px 30px;
+			background: #ffffff;
+			border-radius: 16px; /* 圆角更柔和 */
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* 轻阴影提升层次感 */
+		}
+
+		/* 标题样式：精致排版 */
+		#text_6ce345d0 .textstyle3 {
+			font-size: 32px;
+			font-weight: 600;
+			color: #333333;
+			letter-spacing: 2px; /* 字间距提升高级感 */
+			display: inline-block;
+			margin-bottom: 30px;
+		}
+
+		/* 主按钮：治愈时间专页 */
+		#button_1cc482e9 {
+			cursor: pointer;
+			margin: 0 auto 40px; /* 与下方按钮区保持间距 */
+			padding: 12px 30px;
+			background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); /* 渐变按钮 */
+			color: white;
+			border-radius: 8px;
+			border: none;
+			display: inline-block;
+			font-size: 16px;
+			transition: all 0.3s ease; /* 过渡动画 */
+			box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+		}
+
+		#button_1cc482e9:hover {
+			transform: translateY(-2px); /* 悬浮上移 */
+			box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+		}
+
+		/* 专区按钮容器：弹性布局 */
+		.zone-buttons {
+			display: flex;
+			gap: 15px; /* 按钮间距 */
+			justify-content: center;
+			flex-wrap: wrap; /* 适配小屏幕换行 */
+			margin-top: 20px;
+		}
+
+		/* 专区按钮样式 */
+		.zone-btn {
+			cursor: pointer;
+			padding: 10px 20px;
+			background: #f8f9fa;
+			border: 1px solid #e9ecef;
+			border-radius: 6px;
+			font-size: 14px;
+			color: #495057;
+			transition: all 0.2s ease;
+			flex: 1;
+			min-width: 120px; /* 最小宽度保证按钮美观 */
+			max-width: 150px;
+		}
+
+		.zone-btn:hover {
+			background: #e9ecef;
+			color: #212529;
+			border-color: #dee2e6;
+		}
+
+		/* 提示弹窗样式 */
+		.toast {
+			position: fixed;
+			top: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: rgba(0, 0, 0, 0.8);
+			color: white;
+			padding: 10px 20px;
+			border-radius: 4px;
+			font-size: 14px;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			z-index: 9999;
+			pointer-events: none;
+		}
+
+		.toast.show {
+			opacity: 1;
+		}
+
+		/* 兼容旧版浏览器的弹性布局前缀 */
+		.zone-buttons {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			-webkit-box-pack: center;
+			    -ms-flex-pack: center;
+			        justify-content: center;
+			-ms-flex-wrap: wrap;
+			    flex-wrap: wrap;
+		}
+	</style>
+</head>
+<body>
+<div class="textstyle1">
+<div id="container_5271cb71">
+	<div id="container_5271cb71_padding">
+		<div class="textstyle1">  
+		  <div id="text_6ce345d0">
+		    <div class="textstyle2">
+		      <span class="textstyle3">一只猫的网站</span>
+		    </div>
+		  </div>
+		  <!-- 主按钮：治愈时间专页 -->
+		  <div id="button_1cc482e9" onclick="jumpPage()">
+		    <div class="vcenterstyle1">
+		    	<div class="vcenterstyle2">      
+		      	<div class="textstyle2">
+		        	<span class="textstyle4">治愈时间专页</span>
+		      	</div>
+		    	</div>
+		    </div>
+		  </div>
+
+		  <!-- 新增专区按钮区域 -->
+		  <div class="zone-buttons">
+		  	<div class="zone-btn" onclick="showToast()">游戏专区</div>
+		  	<div class="zone-btn" onclick="showToast()">网盘专区</div>
+		  	<div class="zone-btn" onclick="showToast()">云电脑专区</div>
+		  </div>
+		</div>
+	<div style="clear:both"></div>
+	</div>
+</div>
+</div>
+
+<!-- 提示弹窗 -->
+<div class="toast" id="toast">正在制作中，敬请期待~</div>
+
+<script>
+// 主按钮跳转功能
+function jumpPage() {
+    window.location.href = "atime.html";
+    // 新标签打开写法：window.open("atime.html");
+}
+
+// 显示制作中提示
+function showToast() {
+	const toast = document.getElementById('toast');
+	toast.classList.add('show');
+	setTimeout(() => {
+		toast.classList.remove('show');
+	}, 2000); // 2秒后隐藏提示
+}
+</script>
+</body>
+</html>
