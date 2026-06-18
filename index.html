@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高级动态时钟 & 倒计时</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Microsoft YaHei, sans-serif;
+        }
+        body {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+        /* 动态渐变流动背景 */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #0f3443);
+            background-size: 400% 400%;
+            animation: gradientFlow 16s ease infinite;
+            z-index: -2;
+        }
+        /* 星空粒子层 */
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 48px 36px;
+            text-align: center;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+            max-width: 620px;
+            width: 94%;
+        }
+        #clock {
+            font-size: 5rem;
+            font-weight: 200;
+            letter-spacing: 4px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 20px rgba(120, 180, 255, 0.5);
+        }
+        #date {
+            font-size: 1.4rem;
+            opacity: 0.85;
+            margin-bottom: 40px;
+        }
+        .countdown-box h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        .input-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        input[type="number"] {
+            width: 70px;
+            padding: 12px 6px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+        }
+        input::placeholder { color: rgba(255,255,255,0.5); }
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        button {
+            padding: 12px 26px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        #startBtn { background: #23a6d5; color: white; }
+        #resetBtn { background: rgba(255,255,255,0.15); color: white; }
+        button:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.25); }
+        #countShow {
+            font-size: 3.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #74ebd5;
+            min-height: 55px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 动态渐变背景 -->
+    <div class="bg-animation"></div>
+    <!-- 星空画布 -->
+    <canvas class="stars"></canvas>
+
+    <div class="container">
+        <!-- 实时时钟区域 -->
+        <div class="time-box">
+            <div id="clock">00:00:00</div>
+            <div id="date">2026年01月01日 星期四</div>
+        </div>
+
+        <!-- 倒计时区域 -->
+        <div class="countdown-box">
+            <h2>倒计时计时器</h2>
+            <div class="input-row">
+                <input type="number" id="h" placeholder="时" min="0" max="99">
+                <input type="number" id="m" placeholder="分" min="0" max="59">
+                <input type="number" id="s" placeholder="秒" min="0" max="59">
+            </div>
+            <div class="btn-group">
+                <button id="startBtn">启动倒计时</button>
+                <button id="resetBtn">重置</button>
+            </div>
+            <div id="countShow">00:00:00</div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 实时更新本地时间
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').innerText = `${h}:${m}:${s}`;
+
+            const week = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][now.getDay()];
+            const dateStr = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${week}`;
+            document.getElementById('date').innerText = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 2. 星空粒子动态背景
+        const canvas = document.querySelector('.stars');
+        const ctx = canvas.getContext('2d');
+        let w, h, starsArr = [];
+        function resizeCanvas() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+            createStars();
+        }
+        function createStars() {
+            starsArr = [];
+            for(let i=0; i<120; i++){
+                starsArr.push({
+                    x: Math.random()*w,
+                    y: Math.random()*h,
+                    r: Math.random()*1.2 + 0.2,
+                    speedX: Math.random()*0.4 - 0.2,
+                    speedY: Math.random()*0.4 - 0.2,
+                    opacity: Math.random()
+                })
+            }
+        }
+        function drawStars(){
+            ctx.clearRect(0,0,w,h);
+            starsArr.forEach(star=>{
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.r, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(255,255,255,${star.opacity})`;
+                ctx.fill();
+                star.x += star.speedX;
+                star.y += star.speedY;
+                if(star.x <0) star.x = w;
+                if(star.x >w) star.x = 0;
+                if(star.y <0) star.y = h;
+                if(star.y >h) star.y =0;
+            })
+            requestAnimationFrame(drawStars);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        drawStars();
+
+        // 3. 倒计时逻辑
+        let timer = null;
+        const countShow = document.getElementById('countShow');
+        const hInput = document.getElementById('h');
+        const mInput = document.getElementById('m');
+        const sInput = document.getElementById('s');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        function formatTime(totalSec){
+            let h = Math.floor(totalSec / 3600);
+            let m = Math.floor((totalSec % 3600)/60);
+            let s = totalSec % 60;
+            return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+
+        startBtn.onclick = ()=>{
+            if(timer) clearInterval(timer);
+            let total = Number(hInput.value||0)*3600 + Number(mInput.value||0)*60 + Number(sInput.value||0);
+            if(total <=0) return alert("请输入有效的倒计时时长！");
+            countShow.innerText = formatTime(total);
+            timer = setInterval(()=>{
+                total--;
+                countShow.innerText = formatTime(total);
+                if(total <=0){
+                    clearInterval(timer);
+                    alert("倒计时结束！");
+                }
+            }, 1000)
+        }
+
+        resetBtn.onclick = ()=>{
+            clearInterval(timer);
+            hInput.value = "";
+            mInput.value = "";
+            sInput.value = "";
+            countShow.innerText = "00:00:00";
+        }
+    </script>
+</body>
+</html>
