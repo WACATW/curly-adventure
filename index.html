@@ -14,26 +14,26 @@
 			font-family: "Microsoft YaHei", Arial, sans-serif;
 		}
 
-		/* 宇宙星空背景：深色渐变+星光效果 */
+		/* 宇宙星空深色背景 */
 		body {
 			min-height: 100vh;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			/* 宇宙渐变背景 */
+			/* 深空渐变底色 */
 			background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-			/* 星光效果 */
+			/* 多层星星点阵 */
 			background-image: 
-				radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-				radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-				radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0,0,0,0)),
-				radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)),
-				radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0,0,0,0)),
-				radial-gradient(2px 2px at 160px 120px, #fff, rgba(0,0,0,0));
+				radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+				radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+				radial-gradient(2px 2px at 50px 160px, #ffffff, transparent),
+				radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+				radial-gradient(2px 2px at 130px 80px, #ffffff, transparent),
+				radial-gradient(2px 2px at 160px 120px, #fff, transparent);
 			background-repeat: repeat;
 			background-size: 200px 200px;
-			/* 兼容旧版浏览器 */
+			/* 兼容旧浏览器弹性布局 */
 			display: -webkit-box;
 			display: -ms-flexbox;
 			-webkit-box-orient: vertical;
@@ -48,38 +48,36 @@
 			        align-items: center;
 		}
 
-		/* 主容器：半透明卡片+磨砂效果 */
+		/* 磨砂玻璃主卡片容器 */
 		#container_5271cb71 {
 			text-align: center;
 			width: 100%;
 			max-width: 600px;
 			padding: 40px 30px;
-			/* 半透明白色+磨砂玻璃效果 */
 			background: rgba(255, 255, 255, 0.1);
 			backdrop-filter: blur(10px);
-			-webkit-backdrop-filter: blur(10px); /* 兼容Safari */
+			-webkit-backdrop-filter: blur(10px);
 			border-radius: 16px;
 			box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
 			border: 1px solid rgba(255, 255, 255, 0.18);
 		}
 
-		/* 标题样式：白色更适配宇宙背景 */
+		/* 网站标题样式，白色发光清晰可见 */
 		#text_6ce345d0 .textstyle3 {
 			font-size: 32px;
 			font-weight: 600;
-			color: #ffffff; /* 白色标题 */
+			color: #ffffff;
 			letter-spacing: 2px;
 			display: inline-block;
 			margin-bottom: 30px;
-			text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* 文字发光效果 */
+			text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 		}
 
-		/* 主按钮：治愈时间专页（星云渐变） */
+		/* 主按钮：治愈时间专页 星云渐变 */
 		#button_1cc482e9 {
 			cursor: pointer;
 			margin: 0 auto 40px;
 			padding: 12px 30px;
-			/* 星云渐变 */
 			background: linear-gradient(90deg, #4158D0 0%, #C850C0 50%, #FFCC70 100%);
 			color: white;
 			border-radius: 8px;
@@ -95,47 +93,54 @@
 			box-shadow: 0 6px 20px rgba(65, 88, 208, 0.6);
 		}
 
-		/* 专区按钮容器：弹性布局 */
+		/* 三个专区按钮容器 */
 		.zone-buttons {
 			display: flex;
 			gap: 15px;
 			justify-content: center;
 			flex-wrap: wrap;
 			margin-top: 20px;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			-webkit-box-pack: center;
+			    -ms-flex-pack: center;
+			        justify-content: center;
+			-ms-flex-wrap: wrap;
+			    flex-wrap: wrap;
 		}
 
-		/* 专区按钮样式：适配宇宙背景 */
+		/* 专区按钮修复：文字清晰不透明 */
 		.zone-btn {
 			cursor: pointer;
 			padding: 10px 20px;
 			background: rgba(255, 255, 255, 0.15);
-			border: 1px solid rgba(255, 255, 255, 0.2);
+			border: 1px solid rgba(255, 255, 255, 0.3);
 			border-radius: 6px;
 			font-size: 14px;
-			color: #ffffff;
+			color: #ffffff !important;
 			transition: all 0.2s ease;
 			flex: 1;
 			min-width: 120px;
 			max-width: 150px;
-			text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+			text-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
 		}
 
 		.zone-btn:hover {
-			background: rgba(255, 255, 255, 0.25);
-			border-color: rgba(255, 255, 255, 0.3);
-			box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+			background: rgba(255, 255, 255, 0.3);
+			border-color: rgba(255, 255, 255, 0.4);
+			box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
 		}
 
-		/* 提示弹窗样式 */
+		/* 弹窗提示样式 */
 		.toast {
 			position: fixed;
 			top: 20px;
 			left: 50%;
 			transform: translateX(-50%);
-			background: rgba(0, 0, 0, 0.8);
+			background: rgba(0, 0, 0, 0.85);
 			color: white;
-			padding: 10px 20px;
-			border-radius: 4px;
+			padding: 10px 24px;
+			border-radius: 6px;
 			font-size: 14px;
 			opacity: 0;
 			transition: opacity 0.3s ease;
@@ -146,17 +151,6 @@
 
 		.toast.show {
 			opacity: 1;
-		}
-
-		/* 兼容旧版浏览器 */
-		.zone-buttons {
-			display: -webkit-box;
-			display: -ms-flexbox;
-			-webkit-box-pack: center;
-			    -ms-flex-pack: center;
-			        justify-content: center;
-			-ms-flex-wrap: wrap;
-			    flex-wrap: wrap;
 		}
 	</style>
 </head>
@@ -170,7 +164,7 @@
 		      <span class="textstyle3">一只猫的网站</span>
 		    </div>
 		  </div>
-		  <!-- 主按钮：治愈时间专页 -->
+		  <!-- 主跳转按钮 -->
 		  <div id="button_1cc482e9" onclick="jumpPage()">
 		    <div class="vcenterstyle1">
 		    	<div class="vcenterstyle2">      
@@ -181,7 +175,7 @@
 		    </div>
 		  </div>
 
-		  <!-- 新增专区按钮区域 -->
+		  <!-- 三个功能按钮 -->
 		  <div class="zone-buttons">
 		  	<div class="zone-btn" onclick="showToast()">游戏专区</div>
 		  	<div class="zone-btn" onclick="showToast()">网盘专区</div>
@@ -193,23 +187,22 @@
 </div>
 </div>
 
-<!-- 提示弹窗 -->
+<!-- 弹窗提示 -->
 <div class="toast" id="toast">正在制作中，敬请期待~</div>
 
 <script>
-// 主按钮跳转功能
+// 跳转到治愈时间页面，文件名自行修改
 function jumpPage() {
     window.location.href = "atime.html";
-    // 新标签打开写法：window.open("atime.html");
 }
 
-// 显示制作中提示
+// 弹出制作中提示
 function showToast() {
 	const toast = document.getElementById('toast');
 	toast.classList.add('show');
 	setTimeout(() => {
 		toast.classList.remove('show');
-	}, 2000); // 2秒后隐藏提示
+	}, 2000);
 }
 </script>
 </body>
