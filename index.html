@@ -11,17 +11,28 @@
 			margin: 0;
 			padding: 0;
 			box-sizing: border-box;
-			font-family: "Microsoft YaHei", Arial, sans-serif; /* 适配中文的优雅字体 */
+			font-family: "Microsoft YaHei", Arial, sans-serif;
 		}
 
-		/* 页面整体布局：全屏居中 + 柔和背景 */
+		/* 宇宙星空背景：深色渐变+星光效果 */
 		body {
 			min-height: 100vh;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); /* 渐变背景提升高级感 */
+			/* 宇宙渐变背景 */
+			background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+			/* 星光效果 */
+			background-image: 
+				radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+				radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+				radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+				radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)),
+				radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0,0,0,0)),
+				radial-gradient(2px 2px at 160px 120px, #fff, rgba(0,0,0,0));
+			background-repeat: repeat;
+			background-size: 200px 200px;
 			/* 兼容旧版浏览器 */
 			display: -webkit-box;
 			display: -ms-flexbox;
@@ -37,75 +48,82 @@
 			        align-items: center;
 		}
 
-		/* 主容器：卡片式设计 + 阴影 */
+		/* 主容器：半透明卡片+磨砂效果 */
 		#container_5271cb71 {
 			text-align: center;
 			width: 100%;
 			max-width: 600px;
 			padding: 40px 30px;
-			background: #ffffff;
-			border-radius: 16px; /* 圆角更柔和 */
-			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* 轻阴影提升层次感 */
+			/* 半透明白色+磨砂玻璃效果 */
+			background: rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px); /* 兼容Safari */
+			border-radius: 16px;
+			box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+			border: 1px solid rgba(255, 255, 255, 0.18);
 		}
 
-		/* 标题样式：精致排版 */
+		/* 标题样式：白色更适配宇宙背景 */
 		#text_6ce345d0 .textstyle3 {
 			font-size: 32px;
 			font-weight: 600;
-			color: #333333;
-			letter-spacing: 2px; /* 字间距提升高级感 */
+			color: #ffffff; /* 白色标题 */
+			letter-spacing: 2px;
 			display: inline-block;
 			margin-bottom: 30px;
+			text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* 文字发光效果 */
 		}
 
-		/* 主按钮：治愈时间专页 */
+		/* 主按钮：治愈时间专页（星云渐变） */
 		#button_1cc482e9 {
 			cursor: pointer;
-			margin: 0 auto 40px; /* 与下方按钮区保持间距 */
+			margin: 0 auto 40px;
 			padding: 12px 30px;
-			background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); /* 渐变按钮 */
+			/* 星云渐变 */
+			background: linear-gradient(90deg, #4158D0 0%, #C850C0 50%, #FFCC70 100%);
 			color: white;
 			border-radius: 8px;
 			border: none;
 			display: inline-block;
 			font-size: 16px;
-			transition: all 0.3s ease; /* 过渡动画 */
-			box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+			transition: all 0.3s ease;
+			box-shadow: 0 4px 15px rgba(65, 88, 208, 0.4);
 		}
 
 		#button_1cc482e9:hover {
-			transform: translateY(-2px); /* 悬浮上移 */
-			box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+			transform: translateY(-2px);
+			box-shadow: 0 6px 20px rgba(65, 88, 208, 0.6);
 		}
 
 		/* 专区按钮容器：弹性布局 */
 		.zone-buttons {
 			display: flex;
-			gap: 15px; /* 按钮间距 */
+			gap: 15px;
 			justify-content: center;
-			flex-wrap: wrap; /* 适配小屏幕换行 */
+			flex-wrap: wrap;
 			margin-top: 20px;
 		}
 
-		/* 专区按钮样式 */
+		/* 专区按钮样式：适配宇宙背景 */
 		.zone-btn {
 			cursor: pointer;
 			padding: 10px 20px;
-			background: #f8f9fa;
-			border: 1px solid #e9ecef;
+			background: rgba(255, 255, 255, 0.15);
+			border: 1px solid rgba(255, 255, 255, 0.2);
 			border-radius: 6px;
 			font-size: 14px;
-			color: #495057;
+			color: #ffffff;
 			transition: all 0.2s ease;
 			flex: 1;
-			min-width: 120px; /* 最小宽度保证按钮美观 */
+			min-width: 120px;
 			max-width: 150px;
+			text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 		}
 
 		.zone-btn:hover {
-			background: #e9ecef;
-			color: #212529;
-			border-color: #dee2e6;
+			background: rgba(255, 255, 255, 0.25);
+			border-color: rgba(255, 255, 255, 0.3);
+			box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 		}
 
 		/* 提示弹窗样式 */
@@ -123,13 +141,14 @@
 			transition: opacity 0.3s ease;
 			z-index: 9999;
 			pointer-events: none;
+			border: 1px solid rgba(255, 255, 255, 0.2);
 		}
 
 		.toast.show {
 			opacity: 1;
 		}
 
-		/* 兼容旧版浏览器的弹性布局前缀 */
+		/* 兼容旧版浏览器 */
 		.zone-buttons {
 			display: -webkit-box;
 			display: -ms-flexbox;
