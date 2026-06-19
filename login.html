@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html> 
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>登录 - 一只猫的小家</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: "Microsoft Yahei", sans-serif;
+		}
+
+		body {
+			background: linear-gradient(to bottom right, #fde2e4, #e2dafa, #d7f0e6);
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 2rem;
+		}
+
+		.login-container {
+			width: 90%;
+			max-width: 400px;
+			background: rgba(255, 255, 255, 0.92);
+			border-radius: 16px;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+			padding: 2.5rem;
+		}
+
+		.title {
+			font-size: 1.8rem;
+			color: #2d3748;
+			text-align: center;
+			margin-bottom: 2rem;
+			position: relative;
+		}
+
+		.title::after {
+			content: "";
+			display: block;
+			width: 60px;
+			height: 3px;
+			background-color: #e2a8c0;
+			margin: 0.8rem auto 0;
+			border-radius: 3px;
+		}
+
+		.form-group {
+			margin-bottom: 1.5rem;
+		}
+
+		.form-group label {
+			display: block;
+			color: #4a5568;
+			margin-bottom: 0.5rem;
+			font-size: 0.95rem;
+		}
+
+		.form-group input {
+			width: 100%;
+			padding: 0.9rem 1rem;
+			border: 1px solid #e2e8f0;
+			border-radius: 8px;
+			font-size: 1rem;
+			background: rgba(255, 255, 255, 0.8);
+		}
+
+		.form-group input:focus {
+			outline: none;
+			border-color: #e2a8c0;
+			box-shadow: 0 0 0 3px rgba(226, 168, 192, 0.1);
+		}
+
+		.login-btn {
+			width: 100%;
+			padding: 0.9rem;
+			border-radius: 8px;
+			border: none;
+			background: linear-gradient(135deg, #f8bbd0 0%, #c1b3f0 100%);
+			color: white;
+			font-size: 1rem;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			margin-top: 1rem;
+		}
+
+		.login-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 4px 12px rgba(248, 187, 208, 0.3);
+		}
+
+		.link-group {
+			text-align: center;
+			margin-top: 1.5rem;
+			font-size: 0.9rem;
+		}
+
+		.link-group a {
+			color: #e2a8c0;
+			text-decoration: none;
+		}
+
+		.link-group a:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<div class="login-container">
+		<h2 class="title">用户登录</h2>
+		<form id="loginForm">
+			<div class="form-group">
+				<label for="username">用户名</label>
+				<input type="text" id="username" placeholder="请输入用户名" required>
+			</div>
+			<div class="form-group">
+				<label for="password">密码</label>
+				<input type="password" id="password" placeholder="请输入密码" required>
+			</div>
+			<button type="submit" class="login-btn">登录</button>
+		</form>
+		<div class="link-group">
+			<p>还没有账号？<a href="register.html">立即注册</a></p>
+			<p><a href="index.html">返回主页</a></p>
+		</div>
+	</div>
+
+	<script>
+		// 登录表单提交逻辑
+		document.getElementById('loginForm').addEventListener('submit', (e) => {
+			e.preventDefault();
+			const username = document.getElementById('username').value;
+			const password = document.getElementById('password').value;
+			
+			// 模拟登录验证（实际项目需对接后端）
+			if (username && password) {
+				alert(`登录成功！欢迎 ${username}`);
+				window.location.href = "index.html";
+			} else {
+				alert("请输入完整的用户名和密码！");
+			}
+		});
+	</script>
+</body>
+</html>

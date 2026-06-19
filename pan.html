@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>猫咪网盘 - 存储到Hugging Face</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Microsoft Yahei", sans-serif; }
+    body {
+      background: linear-gradient(to bottom right, #fde2e4, #e2dafa, #d7f0e6);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.92);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    h1 {
+      color: #2d3748;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+    }
+    .upload-area {
+      border: 2px dashed #f8bbd0;
+      border-radius: 12px;
+      padding: 3rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 2rem;
+    }
+    .upload-area:hover {
+      background: #fef7fb;
+      border-color: #c1b3f0;
+    }
+    .upload-area p {
+      color: #718096;
+      margin-top: 1rem;
+    }
+    #fileUpload { display: none; }
+    .btn-back {
+      display: block;
+      width: 120px;
+      margin: 0 auto;
+      padding: 0.6rem 1rem;
+      background: linear-gradient(135deg, #f8bbd0 0%, #c1b3f0 100%);
+      color: white;
+      text-align: center;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .btn-back:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(248,187,208,0.3);
+    }
+    .file-list {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e2e8f0;
+    }
+    .file-item {
+      padding: 0.8rem;
+      border-radius: 8px;
+      background: #fafafa;
+      margin-bottom: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .file-item a {
+      color: #c1b3f0;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🐱 猫咪网盘（存储到Hugging Face）</h1>
+    
+    <!-- 上传区域 -->
+    <div class="upload-area" id="uploadArea">
+      <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#f8bbd0" stroke-width="2">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="17 8 12 3 7 8"></polyline>
+        <line x1="12" y1="3" x2="12" y2="15"></line>
+      </svg>
+      <p>点击或拖拽文件到这里上传<br>（支持最大5GB文件，存储到Hugging Face）</p>
+      <input type="file" id="fileUpload" accept="*">
+    </div>
+
+    <!-- 文件列表（上传成功后显示） -->
+    <div class="file-list" id="fileList"></div>
+
+    <!-- 返回主页 -->
+    <a href="index.html" class="btn-back">返回主页</a>
+  </div>
+
+  <script>
+    // 从URL获取登录用户名（简化版，实际可改用localStorage）
+    const getUsername = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('username') || 'guest'; // 未登录则显示guest
+    };
+
+    // 上传区域点击触发文件选择
+    document.getElementById('uploadArea').addEventListener('click', () => {
+      document.getElementById('fileUpload').click();
+    });
+
+    // 监听文件选择并上传到HF
+    document.getElementById('fileUpload').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      // 限制文件大小（HF支持更大，这里设5GB）
+      const maxSize = 5 * 1024 * 1024 * 1024;
+      if (file.size > maxSize) {
+        alert(`文件过大！最大支持5GB，当前文件：${(file.size / 1024 / 1024).toFixed(2)}MB`);
+        return;
+      }
+
+      const username = getUsername();
+      alert(`开始上传 ${file.name} 到Hugging Face，请稍候...`);
+
+      // 读取文件为base64（大文件建议分片，这里简化）
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        try {
+          const content = event.target.result.split(',')[1]; // 提取base64内容
+          // 调用后端上传接口
+          const response = await fetch('http://localhost:3000/api/upload-to-hf', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              filename: file.name,
+              content: content,
+              username: username
+            })
+          });
+
+          const result = await response.json();
+          alert(result.message);
+
+          // 上传成功则显示文件链接
+          if (result.success) {
+            const fileList = document.getElementById('fileList');
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+              <span>✅ ${file.name}</span>
+              <a href="${result.fileUrl}" target="_blank">查看/下载</a>
+            `;
+            fileList.appendChild(fileItem);
+          }
+        } catch (err) {
+          alert('上传失败：' + err.message);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
