@@ -1,148 +1,114 @@
 <!DOCTYPE html>
-<html> 
+<html lang="zh-CN">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>游戏专区 - 一只猫的小家</title>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-			font-family: "Microsoft Yahei", sans-serif;
-		}
-
-		body {
-			background: linear-gradient(to bottom right, #fde2e4, #e2dafa, #d7f0e6);
-			min-height: 100vh;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			padding: 2rem 0;
-		}
-
-		.container {
-			width: 90%;
-			max-width: 900px;
-			background: rgba(255, 255, 255, 0.92);
-			border-radius: 16px;
-			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-			padding: 2.5rem;
-			margin-bottom: 2rem;
-		}
-
-		.title {
-			font-size: 2rem;
-			color: #2d3748;
-			text-align: center;
-			margin-bottom: 2rem;
-			position: relative;
-		}
-
-		.title::after {
-			content: "";
-			display: block;
-			width: 80px;
-			height: 3px;
-			background-color: #e2a8c0;
-			margin: 0.8rem auto 0;
-			border-radius: 3px;
-		}
-
-		.game-list {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-			gap: 1.5rem;
-			margin-top: 2rem;
-		}
-
-		.game-card {
-			background: linear-gradient(135deg, #f8bbd0 0%, #c1b3f0 100%);
-			border-radius: 12px;
-			padding: 1.5rem;
-			text-align: center;
-			color: white;
-			transition: all 0.3s ease;
-		}
-
-		.game-card:hover {
-			transform: translateY(-4px);
-			box-shadow: 0 6px 16px rgba(248, 187, 208, 0.35);
-		}
-
-		.game-card h3 {
-			margin-bottom: 1rem;
-			font-size: 1.2rem;
-		}
-
-		.game-card a {
-			color: white;
-			text-decoration: none;
-			padding: 0.5rem 1rem;
-			background: rgba(255, 255, 255, 0.3);
-			border-radius: 6px;
-			font-size: 0.9rem;
-		}
-
-		.back-btn {
-			display: inline-block;
-			margin: 2rem auto 0;
-			padding: 0.8rem 1.8rem;
-			border-radius: 8px;
-			border: none;
-			background: linear-gradient(135deg, #f8bbd0 0%, #c1b3f0 100%);
-			color: white;
-			font-size: 1rem;
-			cursor: pointer;
-			transition: all 0.3s ease;
-			text-decoration: none;
-		}
-
-		.back-btn:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 4px 12px rgba(248, 187, 208, 0.3);
-		}
-
-		.center {
-			text-align: center;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏大厅 - 选择你想玩的游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #12121a;
+            color: #fff;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #42a5f5;
+        }
+        /* 游戏网格布局 */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        /* 游戏卡片 */
+        .game-card {
+            background: #1e1e2f;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .game-card:hover {
+            transform: translateY(-8px);
+            border-color: #42a5f5;
+            box-shadow: 0 8px 24px rgba(66, 165, 245, 0.3);
+        }
+        .game-icon {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+        }
+        .game-name {
+            padding: 14px;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-	<div class="container">
-		<h2 class="title">🎮游戏专区</h2>
-		<p style="text-align:center; color:#718096; margin-bottom:1rem;">精选休闲小游戏，无聊时玩一玩～</p>
-		
-		<div class="game-list">
-			<div class="game-card">
-				<h3>消消乐</h3>
-				<p>经典三消，轻松解压</p>
-				<br>
-				<a href="#">开始游玩</a>
-			</div>
-			<div class="game-card">
-				<h3>贪吃蛇</h3>
-				<p>怀旧经典，锻炼反应</p>
-				<br>
-				<a href="#">开始游玩</a>
-			</div>
-			<div class="game-card">
-				<h3>2048</h3>
-				<p>数字合成，挑战智商</p>
-				<br>
-				<a href="#">开始游玩</a>
-			</div>
-			<div class="game-card">
-				<h3>拼图游戏</h3>
-				<p>趣味拼图，打发时间</p>
-				<br>
-				<a href="#">开始游玩</a>
-			</div>
-		</div>
+    <div class="container">
+        <h1>🎮 游戏大厅</h1>
+        <div class="game-grid" id="gameList"></div>
+    </div>
 
-		<div class="center">
-			<a href="index.html" class="back-btn">返回主页</a>
-		</div>
-	</div>
+    <script>
+        // 游戏配置列表（在这里添加/修改游戏）
+        const gameData = [
+            {
+                id: 1,
+                name: "迷你闯关",
+                icon: "https://picsum.photos/id/237/400/300",
+                gameUrl: "https://example-game1.com/play"
+            },
+            {
+                id: 2,
+                name: "赛车竞速",
+                icon: "https://picsum.photos/id/1072/400/300",
+                gameUrl: "https://example-game2.com/play"
+            },
+            {
+                id: 3,
+                name: "射击小游戏",
+                icon: "https://picsum.photos/id/96/400/300",
+                gameUrl: "https://example-game3.com/play"
+            },
+            {
+                id: 4,
+                name: "益智消除",
+                icon: "https://picsum.photos/id/1068/400/300",
+                gameUrl: "https://example-game4.com/play"
+            }
+        ];
+
+        // 渲染游戏列表
+        const gameListEl = document.getElementById("gameList");
+        gameData.forEach(game => {
+            const card = document.createElement("div");
+            card.className = "game-card";
+            card.innerHTML = `
+                <img class="game-icon" src="${game.icon}" alt="${game.name}">
+                <div class="game-name">${game.name}</div>
+            `;
+            // 点击新开页面，传递游戏地址参数
+            card.onclick = () => {
+                window.open(`play.html?url=${encodeURIComponent(game.gameUrl)}`, "_blank");
+            };
+            gameListEl.appendChild(card);
+        });
+    </script>
 </body>
 </html>
