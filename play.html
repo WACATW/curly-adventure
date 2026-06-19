@@ -36,24 +36,27 @@
     <iframe id="gameFrame"></iframe>
 
     <script>
-        // 获取地址栏传递的游戏链接
-        function getUrlParam(name) {
-            const params = new URLSearchParams(location.search);
-            return params.get(name);
-        }
-        const targetUrl = decodeURIComponent(getUrlParam("url"));
-        const frame = document.getElementById("gameFrame");
-        const tip = document.getElementById("loadingTip");
+function getUrlParam(name) {
+    const params = new URLSearchParams(location.search);
+    return params.get(name);
+}
+const targetUrl = decodeURIComponent(getUrlParam("url"));
+const frame = document.getElementById("gameFrame");
+const tip = document.getElementById("loadingTip");
 
-        if (targetUrl) {
-            frame.src = targetUrl;
-            // 加载完成隐藏提示文字
-            frame.onload = () => {
-                tip.style.display = "none";
-            };
-        } else {
-            tip.innerText = "未获取到游戏地址，请返回大厅重新选择";
-        }
-    </script>
+if (targetUrl) {
+    frame.src = targetUrl;
+    frame.onload = () => {
+        tip.style.display = "none";
+    };
+    // 捕获iframe加载失败
+    frame.onerror = () => {
+        tip.innerText = "游戏链接加载失败！链接不存在或网站禁止嵌入";
+        tip.style.color = "#ff5555";
+    }
+} else {
+    tip.innerText = "未获取到游戏地址，请返回大厅重新选择";
+}
+</script>
 </body>
 </html>
