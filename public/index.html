@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一只猫的小家</title>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft Yahei", sans-serif;
+}
+body{
+    background: linear-gradient(135deg, #ffd6e0, #e2d5fb, #d7f0eb);
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+.top-right{
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+.top-right button, .top-right a{
+    padding: 10px 24px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.35);
+    color: #444;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.top-right button:hover, .top-right a:hover{
+    background: rgba(255,255,255,0.6);
+}
+#adminBtn{
+    background: #222 !important;
+    color: #fff !important;
+}
+#logoutBtn{
+    display: none;
+    background: #f44336 !important;
+    color: #fff !important;
+}
+.main-card{
+    width: min(720px, 95%);
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 50px 30px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+.main-title{
+    font-size: 42px;
+    color: #2d3748;
+    position: relative;
+    margin-bottom: 50px;
+}
+.main-title::after{
+    content: "";
+    width: 90px;
+    height: 3px;
+    background: #e2a8c0;
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.func-wrap{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 22px;
+    margin-bottom: 22px;
+}
+.func-wrap-row2{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 22px;
+}
+.func-btn{
+    padding: 26px 10px;
+    border-radius: 14px;
+    background: linear-gradient(90deg, #f8c8dd, #d6c6f7);
+    border: none;
+    font-size: 18px;
+    color: #333;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+}
+.func-btn:hover{
+    opacity: 0.85;
+}
+.copyright{
+    text-align: center;
+    margin-top: 40px;
+    color: #666;
+    font-size: 14px;
+}
+.welcome-text{
+    font-size: 16px;
+    color: #333;
+}
+</style>
+</head>
+<body>
+<div class="top-right">
+    <button id="adminBtn">管理员后台</button>
+    <!-- 新增退出登录按钮 -->
+    <button id="logoutBtn">退出登录</button>
+    <div class="auth-box">
+        <a href="register.html">注册</a>
+        <a href="login.html">登录</a>
+    </div>
+    <span class="welcome-text" id="welcomeText"></span>
+</div>
+
+<div class="main-card">
+    <h1 class="main-title">一只猫的小家</h1>
+    <div class="func-wrap">
+        <a href="time.html" class="func-btn">时间倒计时</a>
+        <a href="game.html" class="func-btn">🎮游戏专区</a>
+        <a onclick="alert('网盘正在开发中，敬请期待！')" class="func-btn">☁️网盘</a>
+    </div>
+    <div class="func-wrap-row2">
+        <a onclick="alert('云电脑正在开发中，敬请期待！')" class="func-btn">☁️云电脑</a>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
+<div class="copyright">
+© 2026 一只猫的小家 | 一只猫
+</div>
+
+<script>
+// 管理员按钮点击弹窗输入密码
+document.getElementById('adminBtn').addEventListener('click', async ()=>{
+    const inputPwd = prompt("请输入管理员密码：");
+    if(!inputPwd) return;
+    const res = await fetch('/api/verifyAdminPwd',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({inputPwd})
+    })
+    const data = await res.json();
+    if(data.code === 200){
+        alert(data.msg);
+        // 携带密码跳转后台页面
+        location.href = `admin.html?pwd=${inputPwd}`;
+    }else{
+        alert(data.msg);
+    }
+})
+
+// 退出登录逻辑
+document.getElementById('logoutBtn').addEventListener('click', ()=>{
+    if(confirm("确定要退出登录吗？")){
+        // 清空本地全部登录缓存
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('isAdmin');
+        alert("已成功退出登录");
+        location.reload();
+    }
+})
+
+// 登录状态展示（登录后显示退出按钮、隐藏注册登录）
+window.addEventListener('DOMContentLoaded', async function(){
+    const token = localStorage.getItem("token");
+    const welcomeDom = document.getElementById("welcomeText");
+    const authBox = document.querySelector(".auth-box");
+    const logoutBtn = document.getElementById("logoutBtn");
+    if(!token) return;
+    try{
+        const res = await fetch("/api/checkLogin",{
+            headers:{Authorization:`Bearer ${token}`}
+        })
+        const d = await res.json();
+        if(d.code === 200){
+            // 登录成功：隐藏注册登录，显示欢迎文字+退出按钮
+            authBox.style.display = "none";
+            welcomeDom.innerText = `欢迎 ${d.data.username}`;
+            logoutBtn.style.display = "block";
+        }else{
+            localStorage.clear();
+            location.reload();
+        }
+    }catch(err){
+        console.log("登录校验失败", err);
+    }
+})
+</script>
+</body>
+</html>

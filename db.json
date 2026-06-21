@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "username": "AAA",
+      "password": "94edf28c6d6da38fd35d7ad53e485307f89fbeaf120485c8d17a43f323deee71",
+      "phone": "111",
+      "qq": "111",
+      "wechat": "111",
+      "status": "pass",
+      "registerTime": "2026/6/20 22:26:40"
+    },
+    {
+      "username": "111",
+      "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
+      "phone": "111111",
+      "qq": "111111",
+      "wechat": "111111",
+      "status": "pass",
+      "registerTime": "2026/6/21 09:29:12"
+    }
+  ],
+  "sessions": [
+    {
+      "token": "c2890c27e10594cbaa0a27ae54b9f4a2",
+      "username": "666666",
+      "expireTime": 1781967788203
+    },
+    {
+      "token": "5a61569c069207a24c0bc3edde842922",
+      "username": "一只猫",
+      "expireTime": 1782050911036
+    },
+    {
+      "token": "5a5c69e0141f92508acb13591ebef3c7",
+      "username": "admin",
+      "expireTime": 1782053752445
+    },
+    {
+      "token": "001de942409774ba02f19ae6184a5daa",
+      "username": "111",
+      "expireTime": 1782091793111
+    }
+  ]
+}
