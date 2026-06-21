@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用户注册</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Microsoft Yahei}
+body{background:linear-gradient(135deg,#fde2e4,#e2dafa,#d7f0e6);min-height:100vh;display:flex;align-items:center;justify-content:center}
+.box{width:92%;max-width:500px;background:rgba(255,255,255,.92);border-radius:18px;padding:2rem}
+h2{text-align:center;color:#e2a8c0;margin-bottom:1.5rem}
+.tip{font-size:13px;color:#888;margin:6px 0 12px}
+input{width:100%;padding:.8rem;margin:6px 0;border:1px #ddd solid;border-radius:8px;font-size:1rem}
+.submit{width:100%;padding:.9rem;margin-top:1rem;background:#e2a8c0;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer}
+a{display:block;text-align:center;margin-top:1rem;color:#e2a8c0;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>账号注册</h2>
+  <div class="tip">手机号、QQ、微信号至少填写一项用于备案审核</div>
+
+  <input id="username" placeholder="设置登录用户名">
+  <input id="pwd" type="password" placeholder="设置登录密码（至少6位）">
+  <input id="pwd2" type="password" placeholder="确认密码">
+
+  <input id="phone" placeholder="手机号（选填其一）">
+  <input id="qq" placeholder="QQ号（选填其一）">
+  <input id="wechat" placeholder="微信号（选填其一）">
+
+  <button class="submit" id="regBtn">提交注册</button>
+  <a href="login.html">已有账号？前往登录</a>
+</div>
+
+<script>
+document.getElementById('regBtn').onclick = async ()=>{
+  const username = document.getElementById('username').value.trim();
+  const pwd = document.getElementById('pwd').value.trim();
+  const pwd2 = document.getElementById('pwd2').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const qq = document.getElementById('qq').value.trim();
+  const wechat = document.getElementById('wechat').value.trim();
+
+  if(!username || !pwd) return alert("用户名密码不能为空");
+  if(pwd.length<6) return alert("密码至少6位");
+  if(pwd!==pwd2) return alert("两次密码不一致");
+  if(!phone && !qq && !wechat) return alert("手机号/QQ/微信至少填一项");
+
+  const res = await fetch('/api/register',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({username,password:pwd,phone,qq,wechat})
+  })
+  const data = await res.json();
+  alert(data.msg);
+  if(data.code===200) setTimeout(()=>location.href="login.html",1200);
+}
+</script>
+</body>
+</html>
