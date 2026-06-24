@@ -2,72 +2,29 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>网盘 - 一只猫的小家</title>
   <style>
+    /* 清除浏览器默认边距，给百分比高度提供基准 */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Microsoft Yahei", sans-serif;
     }
-    body {
-      background: linear-gradient(to bottom right, #fde2e4, #e2dafa, #d7f0e6);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    html, body {
+      width: 100%;
+      height: 100%; /* 关键：父层必须显式100%高度，否则iframe高度失效 */
+      overflow: hidden; /* 隐藏页面滚动条，不留白边 */
     }
-    .container {
-      width: 90%;
-      max-width: 800px;
-      background: rgba(255, 255, 255, 0.92);
-      border-radius: 16px;
-      padding: 2.5rem;
-      text-align: center;
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: none; /* 去掉iframe默认灰色边框 */
     }
   </style>
 </head>
-<body>
-  <div class="container" id="content"></div>
-
-  <script>
-    async function checkAuth() {
-      const token = localStorage.getItem('token');
-      const content = document.getElementById('content');
-
-      if (!token) {
-        content.innerHTML = `
-          <h2 style="color:#e2a8c0;">请先登录</h2>
-          <p style="margin:2rem 0;">您需要登录后才能访问网盘</p>
-          <a href="login.html" style="padding:0.6rem 1.2rem; background:#e2a8c0; color:white; border-radius:8px; text-decoration:none;">前往登录</a>
-        `;
-        return;
-      }
-
-      try {
-        const res = await fetch('http://localhost:3000/api/pan', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await res.json();
-        
-        if (data.code === 200) {
-          content.innerHTML = `
-            <h2 style="color:#2d3748; margin-bottom:2rem;">个人网盘</h2>
-            <p>欢迎 ${data.data.username}，这里是你的网盘空间</p>
-          `;
-        } else {
-          localStorage.clear();
-          content.innerHTML = `
-            <h2 style="color:#e2a8c0;">登录已过期</h2>
-            <a href="login.html" style="padding:0.6rem 1.2rem; background:#e2a8c0; color:white; border-radius:8px; text-decoration:none;">重新登录</a>
-          `;
-        }
-      } catch (err) {
-        content.innerHTML = `<h2>网络错误</h2><p>请启动后端服务</p>`;
-      }
-    }
-    window.onload = checkAuth;
-  </script>
-</body>
+  <body>
+  <iframe src="https://wacatw-pan.hf.space" allowfullscreen></iframe>
+   </body>
 </html>
